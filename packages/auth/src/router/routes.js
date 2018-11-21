@@ -25,6 +25,11 @@ const routes = [
       name: 'signup.utopian',
       component: () => import('src/pages/signup/utopian')
     },
+    {
+      path: '/steem/connect/',
+      name: 'signup.connect',
+      component: () => import('src/pages/steem/connect')
+    },
     { // Always leave this as last one
       path: '/*',
       name: 'not-found',

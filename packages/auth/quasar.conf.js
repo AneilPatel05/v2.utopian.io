@@ -12,7 +12,7 @@ module.exports = function (ctx) {
     supportIE: false,
     css: ['app.styl'],
     // app plugins (/src/plugins)
-    extras: ['roboto-font', 'mdi', 'material-icons',],
+    extras: ['roboto-font', 'mdi', 'material-icons'],
     plugins: [
       'axios',
       'i18n',
