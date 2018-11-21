@@ -12,11 +12,18 @@ const getUserByUsername = async (req, h) => {
   return h.response({ data: user.getPublicFields() })
 }
 
+/**
+ *  Return a boolean that says whether the user has claimed a blockchain
+ *  account through Utopian or not
+ *  @param {string} req.params.blockchain - which blockchain. Currently only accepts 'steem'
+ *  @returns {boolean}
+ *  @author Icaro Harry
+ */
 const hasClaimedBlockchainAccount = async (req, h) => {
-  const user = await User.findOne({ username: req.auth.credentials.username })
+  const user = await User.findOne({ _id: req.auth.credentials.uid })
 
   const hasClaimed = await UtopianBlockchainAccounts.count({
-    blockchain: req.payload.blockchain,
+    blockchain: req.params.blockchain,
     '$or': user.authProviders.map((authProvider) => ({
       '$and': [{
         provider: authProvider.type,
@@ -25,7 +32,8 @@ const hasClaimedBlockchainAccount = async (req, h) => {
     }))
   })
 
-  return hasClaimed
+  // Parse result to boolean
+  return !!parseInt(hasClaimed)
 }
 
 /**

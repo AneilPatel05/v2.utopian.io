@@ -32,6 +32,11 @@ const updateImagesEndpoint = {
   }
 }
 
+const hasClaimedBlockchainAccountEndpoint = {
+  method: 'POST',
+  url: '/v1/user/blockchains/steem/claimed'
+}
+
 describe('update the profile main information', () => {
   let response
   let payload
@@ -95,5 +100,41 @@ describe('update the profile images', () => {
 
   it('should return the success message', () => {
     assert.equal(payload, 'updateSuccess')
+  })
+})
+
+describe('has claimed blockchain account', () => {
+  let userClaimedResponse
+  let userClaimedPayload
+  let userHasNotClaimedResponse
+  let userHasNotClaimedPayload
+
+  before(async () => {
+    const token = generateAccessToken({ uid: '5ba3d89a197c286217e02d5f', username: 'icaro' })
+    const secondToken = generateAccessToken({ uid: '5bcaf95f3344e352e0921157', username: 'gregory' })
+    hasClaimedBlockchainAccountEndpoint.headers = {
+      'Authorization': token
+    }
+    userClaimedResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
+    userClaimedPayload = userClaimedResponse.payload
+
+    hasClaimedBlockchainAccountEndpoint.headers = {
+      'Authorization': secondToken
+    }
+    userHasNotClaimedResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
+    userHasNotClaimedPayload = userHasNotClaimedResponse.payload
+  })
+
+  it('should return a 200 status response', () => {
+    expect(userClaimedResponse.statusCode).to.equal(200)
+    expect(userHasNotClaimedResponse.statusCode).to.equal(200)
+  })
+
+  it('should return true for the user that already claimed', () => {
+    assert.equal(userClaimedPayload, 'true')
+  })
+
+  it('should return false for the user that has not claimed', () => {
+    assert.equal(userHasNotClaimedPayload, 'false')
   })
 })
