@@ -21,7 +21,7 @@ const utopianBlockchainAccounts = new Schema({
     enum: ['github'],
     required: true
   },
-  account: {
+  username: {
     type: String,
     required: true
   },

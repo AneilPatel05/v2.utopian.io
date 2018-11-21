@@ -1,6 +1,6 @@
 const Boom = require('boom')
 const User = require('./user.model')
-// const UtopianBlockchainAccounts = require('./utopianBlockchainAccounts.model')
+const UtopianBlockchainAccounts = require('./utopianBlockchainAccounts.model')
 const { getUserInformation } = require('../../utils/github')
 const RefreshToken = require('../auth/refreshtoken.model')
 const { getAccessToken, getRefreshToken } = require('../../utils/token')
@@ -13,9 +13,19 @@ const getUserByUsername = async (req, h) => {
 }
 
 const hasClaimedBlockchainAccount = async (req, h) => {
-  const user = await User.findOne({ username: req.params.username })
+  const user = await User.findOne({ username: req.auth.credentials.username })
 
-  return user
+  const hasClaimed = await UtopianBlockchainAccounts.count({
+    blockchain: req.payload.blockchain,
+    '$or': user.authProviders.map((authProvider) => ({
+      '$and': [{
+        provider: authProvider.type,
+        username: authProvider.username
+      }]
+    }))
+  })
+
+  return hasClaimed
 }
 
 /**
