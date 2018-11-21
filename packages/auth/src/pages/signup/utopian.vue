@@ -11,7 +11,7 @@ export default {
     let scopes = jwt.decode(cookies.get('access_token')).scopes
 
     if (!scopes.includes('createAccount')) {
-      redirect('/')
+      // redirect('/')
     }
   },
 
@@ -110,26 +110,24 @@ export default {
 </script>
 
 <template lang="pug">
-q-layout.u-page-signup-utopian
-  .row.justify-center.items-center
-    .create-user-form
-      img.utopian-logo(src="~assets/img/logo-black.svg")
-      p.q-title Please create a unique username to be used in Utopian.io
-      q-field.full-width.q-mb-md(
-        :error="$v.user.username.$error && user.usernameAvailable !== 'checking'",
-        :error-label="getErrorLabel()"
-      )
-        q-input(
-          v-model.trim="user.username",
-          placeholder="ada.lovelace",
-          :before="[{ icon: 'mdi-account' }]",
-          prefix="@"
-          maxlength="32"
-          @input="validateUsername()"
-          :loading="user.usernameAvailable === 'checking'"
-          :color="user.usernameAvailable === true ? 'green' : 'primary'"
-        )
-      q-btn.full-width(color="primary", label="Create", @click="submit", :disabled="user.usernameAvailable !== true")
+
+.create-user-form
+  p.q-title Please create a unique username to be used in Utopian.io
+  q-field.full-width.q-mb-md(
+    :error="$v.user.username.$error && user.usernameAvailable !== 'checking'",
+    :error-label="getErrorLabel()"
+  )
+    q-input(
+      v-model.trim="user.username",
+      placeholder="ada.lovelace",
+      :before="[{ icon: 'mdi-account' }]",
+      prefix="@"
+      maxlength="32"
+      @input="validateUsername()"
+      :loading="user.usernameAvailable === 'checking'"
+      :color="user.usernameAvailable === true ? 'green' : 'primary'"
+    )
+  q-btn.full-width(color="primary", label="Create", @click="submit", :disabled="user.usernameAvailable !== true")
 </template>
 
 <style lang="stylus">
@@ -139,10 +137,6 @@ q-layout.u-page-signup-utopian
   }
   .create-user-form {
     text-align center
-    .utopian-logo {
-      height 60px
-      margin-bottom 20px
-    }
   }
 
   .q-if-addon-left {
