@@ -1,5 +1,6 @@
 const Boom = require('boom')
 const User = require('./user.model')
+// const UtopianBlockchainAccounts = require('./utopianBlockchainAccounts.model')
 const { getUserInformation } = require('../../utils/github')
 const RefreshToken = require('../auth/refreshtoken.model')
 const { getAccessToken, getRefreshToken } = require('../../utils/token')
@@ -9,6 +10,12 @@ const getUserByUsername = async (req, h) => {
     username: req.params.username
   })
   return h.response({ data: user.getPublicFields() })
+}
+
+const hasClaimedBlockchainAccount = async (req, h) => {
+  const user = await User.findOne({ username: req.params.username })
+
+  return user
 }
 
 /**
@@ -118,5 +125,6 @@ module.exports = {
   getUserByUsername,
   deleteUserByUsername,
   editUserByUsername,
-  isUsernameAvailable
+  isUsernameAvailable,
+  hasClaimedBlockchainAccount
 }
