@@ -19,6 +19,13 @@ export default {
         job: '',
         resume: ''
       },
+      workExperience: {
+        jobTitle: '',
+        company: '',
+        from: '',
+        to: '',
+        summary: ''
+      },
       images: {
         avatarUrl: '',
         cover: ''
@@ -73,6 +80,9 @@ export default {
     },
     uploadCover (file) {
       this.uploadImage(file[0], 'cover', 'coverUploader')
+    },
+    async updateWorkExperience () {
+      console.log('update education')
     },
     uploadImage (file, prop, ref) {
       const data = new FormData()
@@ -212,6 +222,30 @@ div.profile-form
         q-card-separator
         q-card-actions(align="end")
           q-btn(color="primary", :label="$t('users.profile.update')", @click="updateSkills")
+
+    .col-md-6.col-sm-12.col-xs-12
+      q-list
+        q-collapsible(label="Work Experiences" collapse-icon="add_circle_outline" opened=true)
+          div
+            q-field(label="Job title", orientation="vertical", helper="Job title in this company")
+              q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="updateWorkExperience")
+            q-field(label="Company", orientation="vertical", helper="Name of the company")
+              q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="updateWorkExperience")
+            .row.gutter-sm
+              .col-md-3.col-sm-12.col-xs-12
+                q-field(label="From", orientation="vertical", helper="Start date")
+                  q-input(v-model.trim.lazy="workExperience.from", type="date", @keyup.enter="updateWorkExperience")
+              .col-md-3.col-sm-12.col-xs-12
+                q-field(label="To", orientation="vertical", helper="End date. Empty if it's ongoing")
+                  q-input(v-model.trim.lazy="workExperience.to", type="date" @keyup.enter="updateWorkExperience")
+            q-field(label="Summary", :count="500", orientation="vertical",
+              helper="Summary of your experience in this job position"
+            )
+              q-input(v-model="workExperience.summary", type="textarea",
+                maxlength="500", :max-height="150", rows="7")
+            q-field
+              q-btn(color="primary", label="Save", @click="updateJob")
+
 </template>
 
 <style lang="stylus">
