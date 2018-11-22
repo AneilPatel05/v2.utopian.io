@@ -106,12 +106,15 @@ describe('update the profile images', () => {
 describe('has claimed blockchain account', () => {
   let userClaimedResponse
   let userClaimedPayload
+  let userClaimedWithIdResponse
+  let userClaimedWithIdPayload
   let userHasNotClaimedResponse
   let userHasNotClaimedPayload
 
   before(async () => {
     const token = generateAccessToken({ uid: '5ba3d89a197c286217e02d5f', username: 'icaro' })
     const secondToken = generateAccessToken({ uid: '5bcaf95f3344e352e0921157', username: 'gregory' })
+    const thirdToken = generateAccessToken({ uid: '5bc798adad26d25470439533', username: 'nothingismagick' })
     hasClaimedBlockchainAccountEndpoint.headers = {
       'Authorization': token
     }
@@ -121,17 +124,28 @@ describe('has claimed blockchain account', () => {
     hasClaimedBlockchainAccountEndpoint.headers = {
       'Authorization': secondToken
     }
+    userClaimedWithIdResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
+    userClaimedWithIdPayload = userClaimedWithIdResponse.payload
+
+    hasClaimedBlockchainAccountEndpoint.headers = {
+      'Authorization': thirdToken
+    }
     userHasNotClaimedResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
     userHasNotClaimedPayload = userHasNotClaimedResponse.payload
   })
 
   it('should return a 200 status response', () => {
     expect(userClaimedResponse.statusCode).to.equal(200)
+    expect(userClaimedWithIdResponse.statusCode).to.equal(200)
     expect(userHasNotClaimedResponse.statusCode).to.equal(200)
   })
 
   it('should return true for the user that already claimed', () => {
     assert.equal(userClaimedPayload, 'true')
+  })
+
+  it('should return true for the user that claimed with an user id', () => {
+    assert.equal(userClaimedWithIdPayload, 'true')
   })
 
   it('should return false for the user that has not claimed', () => {

@@ -18,12 +18,10 @@ const utopianBlockchainAccounts = new Schema({
   },
   provider: {
     type: String,
-    enum: ['github'],
-    required: true
+    enum: ['github']
   },
   username: {
-    type: String,
-    required: true
+    type: String
   },
   userId: {
     type: String

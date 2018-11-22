@@ -24,16 +24,15 @@ const hasClaimedBlockchainAccount = async (req, h) => {
 
   const hasClaimed = await UtopianBlockchainAccounts.count({
     blockchain: req.params.blockchain,
-    '$or': user.authProviders.map((authProvider) => ({
-      '$and': [{
+    $or: user.authProviders.map((authProvider) => ({
+      $and: [{
         provider: authProvider.type,
         username: authProvider.username
       }]
-    }))
+    })).concat({ userId: req.auth.credentials.uid })
   })
 
-  // Parse result to boolean
-  return !!parseInt(hasClaimed)
+  return hasClaimed > 0
 }
 
 /**
