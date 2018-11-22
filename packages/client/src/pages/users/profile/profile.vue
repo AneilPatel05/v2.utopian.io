@@ -234,10 +234,10 @@ div.profile-form
             .row.gutter-sm
               .col-md-3.col-sm-12.col-xs-12
                 q-field(label="From", orientation="vertical", helper="Start date")
-                  q-input(v-model.trim.lazy="workExperience.from", type="date", @keyup.enter="updateWorkExperience")
+                  q-input(v-model.trim.lazy="workExperience.from", type="month", @keyup.enter="updateWorkExperience")
               .col-md-3.col-sm-12.col-xs-12
                 q-field(label="To", orientation="vertical", helper="End date. Empty if it's ongoing")
-                  q-input(v-model.trim.lazy="workExperience.to", type="date" @keyup.enter="updateWorkExperience")
+                  q-input(v-model.trim.lazy="workExperience.to", type="month" @keyup.enter="updateWorkExperience")
             q-field(label="Summary", :count="500", orientation="vertical",
               helper="Summary of your experience in this job position"
             )
