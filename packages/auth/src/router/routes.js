@@ -15,9 +15,9 @@ const routes = [
         component: () => import('src/pages/login')
       },
       {
-        path: 'signup/utopian',
-        name: 'signup.utopian',
-        component: () => import('src/pages/signup/utopian')
+        path: 'signup',
+        name: 'signup',
+        component: () => import('src/pages/signup')
       },
       {
         path: 'steem/connect',

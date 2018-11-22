@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { Cookies, debounce, Notify, Loading } from 'quasar'
 
 export default {
-  name: 'u-page-signup-utopian',
+  name: 'u-page-signup',
   preFetch ({ redirect, ssrContext }) {
     const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies
     if (cookies.get('access_token')) {
@@ -115,7 +115,8 @@ export default {
 <template lang="pug">
 
 .u-page-signup-utopian
-  p.q-title Please create a unique username to be used in Utopian.io
+  .q-subheading.q-mb-sm {{ $t('auth.signup.text') }}
+  .q-body-1.text-grey.q-mb-lg {{ $t('auth.signup.smallerText') }}
   q-field.full-width.q-mb-md(
     :error="$v.user.username.$error && user.usernameAvailable !== 'checking'",
     :error-label="getErrorLabel()"
@@ -130,7 +131,7 @@ export default {
       :loading="user.usernameAvailable === 'checking'"
       :color="user.usernameAvailable === true ? 'green' : 'primary'"
     )
-  q-btn.full-width(color="primary", label="Create", @click="submit", :disabled="user.usernameAvailable !== true")
+  q-btn.full-width(color="primary", no-caps, :label="$t('auth.signup.create')", @click="submit", :disabled="user.usernameAvailable !== true")
 </template>
 
 <style lang="stylus">

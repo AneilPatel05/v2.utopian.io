@@ -102,6 +102,11 @@
       "github": "Sign in with GitHub",
       "text": "Connect to Utopian using one of your social accounts.",
       "smallerText": "Don't worry, we won't post anything on your behalf."
+    },
+    "signup": {
+      "text": "You're almost there!",
+      "smallerText": "Please create a unique username to be used in Utopian.",
+      "create": "Create"
     }
   },
   "errors": {
