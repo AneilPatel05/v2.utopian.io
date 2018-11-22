@@ -210,7 +210,9 @@
   },
   "auth": {
     "login": {
-      "github": "Login with GitHub"
+      "github": "Sign in with GitHub",
+      "text": "Connect to Utopian using one of your social accounts.",
+      "smallerText": "Don't worry, we won't post anything on your behalf."
     }
   },
   "errors": {

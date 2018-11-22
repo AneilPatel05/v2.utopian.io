@@ -8,11 +8,14 @@ export default {
   name: 'u-page-signup-utopian',
   preFetch ({ redirect, ssrContext }) {
     const cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies
-    let scopes = jwt.decode(cookies.get('access_token')).scopes
-
-    if (!scopes.includes('createAccount')) {
-      // redirect('/')
+    if (cookies.get('access_token')) {
+      let scopes = jwt.decode(cookies.get('access_token')).scopes
+  
+      if (!scopes.includes('createAccount')) {
+        // redirect('/')
+      }
     }
+    // redirect('/')
   },
 
   // component data.
@@ -111,7 +114,7 @@ export default {
 
 <template lang="pug">
 
-.create-user-form
+.u-page-signup-utopian
   p.q-title Please create a unique username to be used in Utopian.io
   q-field.full-width.q-mb-md(
     :error="$v.user.username.$error && user.usernameAvailable !== 'checking'",
@@ -132,13 +135,6 @@ export default {
 
 <style lang="stylus">
 .u-page-signup-utopian {
-  > div {
-    height 100vh
-  }
-  .create-user-form {
-    text-align center
-  }
-
   .q-if-addon-left {
     margin-top 5px
   }

@@ -18,15 +18,15 @@ export default {
 </script>
 
 <template lang="pug">
-q-layout.u-page-login.row
+q-layout.u-auth-layout.row
   .col-md-4.col-sm-12.col-xs-12.row.login-pane
     .col-12
       i18nDropdownSwitcher.float-right
     .col-12
-      .column.items-center.login-from
+      .column.items-center.main-form
         transition(:duration="{ enter: 100, leave: 100 }", enter-active-class="animated fadeIn", leave-active-class="animated fadeOut")
           div.items-center
-            img.q-mb-lg(src="~assets/img/logo-black.svg")
+            img.logo.q-mb-lg(src="~assets/img/logo-black.svg")
             router-view(:key="$route.path")
   .side-img.col-md-8
     img(src="~assets/img/background.jpg")
@@ -42,19 +42,20 @@ body
 .login-pane
   height 100%
   max-height 100%
-.u-page-login
-  .login-from
+.u-auth-layout
+  .main-form
     max-width 250px
     margin auto
     @media (min-width $breakpoint-md-min)
       margin -25px auto 0 auto
     height 100px
       // margin auto
-    img
-      width 190px
+    img.logo
+      height 46px
     button
       width 100%
       font-family 'Noto Sans'
+      font-style sans-serif
       font-size 12px
       font-weight 600
       height 44px

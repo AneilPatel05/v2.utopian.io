@@ -18,7 +18,10 @@ export default {
 </script>
 
 <template lang="pug">
-  q-btn.q-mb-sm(@click="startGithubLogin", icon="mdi-github-circle", color="white", text-color="black", :label="$t('auth.login.github')")
+  div
+    .q-subheading.q-mb-sm {{ $t('auth.login.text') }}
+    .q-body-1.text-grey.q-mb-lg {{ $t('auth.login.smallerText') }}
+    q-btn.q-mb-sm(@click="startGithubLogin", no-caps, icon="mdi-github-circle", color="black", text-color="white", :label="$t('auth.login.github')")
 </template>
 
 <style lang="stylus">
