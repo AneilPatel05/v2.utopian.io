@@ -44,6 +44,26 @@ const users = new Schema({
   }],
   cover: { type: String },
   email: { type: String },
+  experiences: [{
+    jobTitle: {
+      type: String,
+      required: true
+    },
+    company: {
+      type: String,
+      required: true
+    },
+    location: { type: String },
+    fromMonth: { type: Integer },
+    fromYear: { type: Integer },
+    toMonth: { type: Integer },
+    toYear: { type: Integer },
+    current: {
+      type: Boolean,
+      default: false
+    },
+    description: { type: String }
+  }],
   job: { type: String },
   location: { type: String },
   name: { type: String },
