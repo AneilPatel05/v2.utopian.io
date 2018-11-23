@@ -79,6 +79,24 @@ routes.push([
       tags: ['users'],
       validate: Validate.updateProfileImages
     }
+  },
+  {
+    method: 'POST',
+    path: '/v1/user/profile/workexperience',
+    handler: (req, h) => Handlers.createWorkExperience(req, h),
+    options: {
+      tags: ['users'],
+      validate: Validate.createWorkExperience
+    }
+  },
+  {
+    method: 'POST',
+    path: '/v1/user/profile/workexperience/{id}',
+    handler: (req, h) => Handlers.updateWorkExperience(req, h),
+    options: {
+      tags: ['users'],
+      validate: Validate.updateWorkExperience
+    }
   }
 ])
 

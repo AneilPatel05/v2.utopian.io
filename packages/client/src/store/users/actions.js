@@ -52,6 +52,23 @@ export const fetchUserProfile = async (context) =>
     url: '/v1/user/profile'
   })
 
+export const createWorkExperience = async (context, data) =>
+  API.call({
+    context,
+    method: 'post',
+    url: '/v1/user/profile/workexperience',
+    data
+  })
+
+export const updateWorkExperience = async (context, workExperience) => {
+  const { _id, ...data } = workExperience
+  return API.call({
+    context,
+    method: 'post',
+    url: `/v1/user/profile/workexperience/${_id}`,
+    data
+  })
+}
 export const updateProfileMainInformation = async (context, data) =>
   API.call({
     context,

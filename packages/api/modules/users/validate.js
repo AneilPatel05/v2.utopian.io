@@ -37,6 +37,44 @@ const saveUser = {
   }
 }
 
+/**
+ * Create a user's work experience
+ *
+ * @author East Mael
+ */
+const createWorkExperience = {
+  payload: {
+    jobTitle: Joi.string().trim().required(),
+    company: Joi.string().trim().optional().allow(''),
+    location: Joi.string().trim().optional().allow(''),
+    fromMonth: Joi.number().integer().min(1).max(12),
+    fromYear: Joi.number().integer().min(1900).max(9999),
+    toMonth: Joi.number().integer().min(1).max(12),
+    toYear: Joi.number().integer().min(1900).max(9999),
+    current: Joi.boolean(),
+    description: Joi.string().trim().optional().allow('')
+  }
+}
+
+/**
+ * Update a user's work experience
+ *
+ * @author East Mael
+ */
+const updateWorkExperience = {
+  payload: {
+    jobTitle: Joi.string().trim().required(),
+    company: Joi.string().trim().optional().allow(''),
+    location: Joi.string().trim().optional().allow(''),
+    fromMonth: Joi.number().integer().min(1).max(12),
+    fromYear: Joi.number().integer().min(1900).max(9999),
+    toMonth: Joi.number().integer().min(1).max(12),
+    toYear: Joi.number().integer().min(1900).max(9999),
+    current: Joi.boolean(),
+    description: Joi.string().trim().optional().allow('')
+  }
+}
+
 const updateProfileMainInformation = {
   payload: {
     email: Joi.string().trim().optional().email().allow(''),

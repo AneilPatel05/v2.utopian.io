@@ -129,6 +129,56 @@ const updateProfile = async (req, h) => {
   throw Boom.badData('users.doesNotExist')
 }
 
+/**
+ * Create user work experience
+ * This method is used by 3 different endpoints that differentiate the page's forms
+ *
+ * @param {object} req - request
+ * @param {object} h - response
+ * @payload {object} req.payload - either main information, job or images data
+ *
+ * @returns update success message
+ * @author East Mael
+ */
+const createWorkExperience = async (req, h) => {
+  if (!req.auth.credentials.uid) {
+    throw Boom.unauthorized('general.unauthorized')
+  }
+
+  const response = await User.updateOne({ _id: req.auth.credentials.uid }, req.payload)
+  if (response.n === 1) {
+    return h.response('updateSuccess')
+  }
+
+  throw Boom.badData('users.doesNotExist')
+}
+
+
+/**
+ * Update user work experience
+ * This method is used by 3 different endpoints that differentiate the page's forms
+ *
+ * @param {object} req - request
+ * @param {object} h - response
+ * @payload {object} req.payload - either main information, job or images data
+ *
+ * @returns update success message
+ * @author East Mael
+ */
+const updateWorkExperience = async (req, h) => {
+  if (!req.auth.credentials.uid) {
+    throw Boom.unauthorized('general.unauthorized')
+  }
+
+  const response = await User.updateOne({ _id: req.auth.credentials.uid }, req.payload)
+  if (response.n === 1) {
+    return h.response('updateSuccess')
+  }
+
+  throw Boom.badData('users.doesNotExist')
+}
+
+
 module.exports = {
   createUser,
   getUsersByPartial,
