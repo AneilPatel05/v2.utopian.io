@@ -130,14 +130,13 @@ const updateProfile = async (req, h) => {
 }
 
 /**
- * Create user work experience
- * This method is used by 3 different endpoints that differentiate the page's forms
+ * Create new user work experience
  *
  * @param {object} req - request
  * @param {object} h - response
- * @payload {object} req.payload - either main information, job or images data
+ * @payload {object} req.payload
  *
- * @returns update success message
+ * @returns new work experience
  * @author East Mael
  */
 const createWorkExperience = async (req, h) => {
@@ -145,9 +144,11 @@ const createWorkExperience = async (req, h) => {
     throw Boom.unauthorized('general.unauthorized')
   }
 
-  const response = await User.updateOne({ _id: req.auth.credentials.uid }, req.payload)
-  if (response.n === 1) {
-    return h.response('updateSuccess')
+  const user = await User.findOne({ _id: req.auth.credentials.uid })
+  const newWorkExperience = await user.workExperiences.create(req.payload)
+
+  if (newWorkExperience) {
+    return h.response(newWorkExperience)
   }
 
   throw Boom.badData('users.doesNotExist')
@@ -156,13 +157,12 @@ const createWorkExperience = async (req, h) => {
 
 /**
  * Update user work experience
- * This method is used by 3 different endpoints that differentiate the page's forms
  *
  * @param {object} req - request
  * @param {object} h - response
- * @payload {object} req.payload - either main information, job or images data
+ * @payload {object} req.payload
  *
- * @returns update success message
+ * @returns updated work experience
  * @author East Mael
  */
 const updateWorkExperience = async (req, h) => {
@@ -170,9 +170,13 @@ const updateWorkExperience = async (req, h) => {
     throw Boom.unauthorized('general.unauthorized')
   }
 
-  const response = await User.updateOne({ _id: req.auth.credentials.uid }, req.payload)
-  if (response.n === 1) {
-    return h.response('updateSuccess')
+  const id = req.params.id;
+
+  const user = await User.findOne({ _id: req.auth.credentials.uid })
+  user.workExperiences.id(id) = req.payload
+  const updatedUser = await user.save();
+  if (updatedUser) {
+    return h.response(updatedUser.workExperiences)
   }
 
   throw Boom.badData('users.doesNotExist')
@@ -185,5 +189,7 @@ module.exports = {
   getUserByUsername,
   getUserProfile,
   updateProfile,
+  createWorkExperience,
+  updateWorkExperience,
   isUsernameAvailable
 }

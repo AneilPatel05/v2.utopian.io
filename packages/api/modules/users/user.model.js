@@ -44,7 +44,7 @@ const users = new Schema({
   }],
   cover: { type: String },
   email: { type: String },
-  experiences: [{
+  workExperiences: [{
     jobTitle: {
       type: String,
       required: true

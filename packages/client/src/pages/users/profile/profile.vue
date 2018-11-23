@@ -45,6 +45,11 @@ export default {
       avatarUrl: { required, url },
       cover: { url }
     },
+    workExperience: {
+      jobTitle: { required },
+      company: { required },
+      from: { required }
+    },
     skills: {}
   },
   async mounted () {
@@ -118,7 +123,6 @@ export default {
       }
     },
     async editWorkExperience () {
-      this.$v.workExperiences.$touch()
       console.log('TODO: update work experience')
     },
     async updateMainInformation () {
@@ -264,7 +268,7 @@ div.profile-form
         q-card-separator
         q-card-actions(align="end")
           q-field
-            q-btn(color="primary", label="Save", @click="updateJob")
+            q-btn(color="primary", label="Save", @click="newWorkExperience")
 
         q-card-separator
         q-field(v-if="workExperiences.length > 0")
