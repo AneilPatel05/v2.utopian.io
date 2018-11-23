@@ -218,6 +218,12 @@
       "text": "You're almost there!",
       "smallerText": "Please create a unique username to be used in Utopian.",
       "create": "Create"
+    },
+    "steemConnect": {
+      "text": "You can connect a Steem account to receive SP rewards.",
+      "smallerText": "You can create a new one if you don't have any.",
+      "connect": "Connect",
+      "create": "I don't have a Steem account"
     }
   },
   "errors": {
