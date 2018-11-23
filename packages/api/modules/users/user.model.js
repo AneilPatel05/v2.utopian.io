@@ -98,7 +98,8 @@ users.methods.getEditableFields = function () {
     job: this.job,
     location: this.location,
     name: this.name,
-    resume: this.resume
+    resume: this.resume,
+    workExperiences: this.workExperiences
   }
 }
 
