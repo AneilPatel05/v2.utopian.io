@@ -22,10 +22,15 @@ export default {
       workExperience: {
         jobTitle: '',
         company: '',
-        from: '',
-        to: '',
-        summary: ''
+        location: '',
+        fromMonth: '',
+        fromYear: '',
+        toMonth: '',
+        toYear: '',
+        current: true,
+        description: ''
       },
+      workExperiences: [],
       images: {
         avatarUrl: '',
         cover: ''
@@ -224,27 +229,57 @@ div.profile-form
           q-btn(color="primary", :label="$t('users.profile.update')", @click="updateSkills")
 
     .col-md-6.col-sm-12.col-xs-12
-      q-list
-        q-collapsible(label="Work Experiences" collapse-icon="add_circle_outline" opened=true)
-          div
-            q-field(label="Job title", orientation="vertical", helper="Job title in this company")
-              q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="updateWorkExperience")
-            q-field(label="Company", orientation="vertical", helper="Name of the company")
-              q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="updateWorkExperience")
-            .row.gutter-sm
-              .col-md-3.col-sm-12.col-xs-12
-                q-field(label="From", orientation="vertical", helper="Start date")
-                  q-input(v-model.trim.lazy="workExperience.from", type="month", @keyup.enter="updateWorkExperience")
-              .col-md-3.col-sm-12.col-xs-12
-                q-field(label="To", orientation="vertical", helper="End date. Empty if it's ongoing")
-                  q-input(v-model.trim.lazy="workExperience.to", type="month" @keyup.enter="updateWorkExperience")
-            q-field(label="Summary", :count="500", orientation="vertical",
-              helper="Summary of your experience in this job position"
-            )
-              q-input(v-model="workExperience.summary", type="textarea",
-                maxlength="500", :max-height="150", rows="7")
-            q-field
-              q-btn(color="primary", label="Save", @click="updateJob")
+      h4.q-mb-sm Work Experiences
+      q-card(square, color="white")
+        q-card-main
+          q-collapsible(label="Work Experiences", collapse-icon="add_circle_outline", opened=true)
+            div
+              q-field(label="Job title", orientation="vertical")
+                q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="updateWorkExperience")
+              q-field(label="Company", orientation="vertical")
+                q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="updateWorkExperience")
+              .row.gutter-sm
+                .col-md-3.col-sm-12.col-xs-12
+                  q-field(label="From", orientation="vertical")
+                    q-datetime(v-model.trim.lazy="workExperience.from", @keyup.enter="updateWorkExperience")
+                .col-md-3.col-sm-12.col-xs-12
+                  q-field(label="To", orientation="vertical")
+                    q-datetime(v-model.trim.lazy="workExperience.to", @keyup.enter="updateWorkExperience")
+              q-field(label="Summary", :count="500", orientation="vertical")
+                q-input(v-model="workExperience.summary", type="textarea",
+                  maxlength="500", :max-height="150", rows="7")
+
+        q-card-separator
+        q-card-actions(align="end")
+          q-field
+            q-btn(color="primary", label="Save", @click="updateJob")
+
+        q-card-separator
+        q-field(v-if="workExperiences.length > 0")
+          q-list(v-for="workExperience in workExperiences", separator, :key="workExperience._id")
+            q-item
+              q-card
+                <q-card-title>
+                  Title
+
+                  <span slot="subtitle">Subtitle</span>
+
+                  <q-icon slot="right" name="more_vert">
+                    <q-popover>
+                      <q-list link class="no-border">
+                        <q-item v-close-overlay>
+                          <q-item-main label="Remove Card" />
+                        </q-item>
+                        <q-item v-close-overlay>
+                          <q-item-main label="Send Feedback" />
+                        </q-item>
+                        <q-item v-close-overlay>
+                          <q-item-main label="Share" />
+                        </q-item>
+                      </q-list>
+                    </q-popover>
+                  </q-icon>
+                </q-card-title>
 
 </template>
 

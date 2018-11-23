@@ -54,10 +54,10 @@ const users = new Schema({
       required: true
     },
     location: { type: String },
-    fromMonth: { type: Integer },
-    fromYear: { type: Integer },
-    toMonth: { type: Integer },
-    toYear: { type: Integer },
+    fromMonth: { type: Number },
+    fromYear: { type: Number },
+    toMonth: { type: Number },
+    toYear: { type: Number },
     current: {
       type: Boolean,
       default: false
