@@ -270,32 +270,21 @@ div.profile-form
           q-field
             q-btn(color="primary", label="Save", @click="newWorkExperience")
 
-        q-card-separator
-        q-field(v-if="workExperiences.length > 0")
-          q-list(v-for="workExperience in workExperiences", separator, :key="workExperience._id")
-            q-item
-              q-card
-                <q-card-title>
-                  Title
-
-                  <span slot="subtitle">Subtitle</span>
-
-                  <q-icon slot="right" name="more_vert">
-                    <q-popover>
-                      <q-list link class="no-border">
-                        <q-item v-close-overlay>
-                          <q-item-main label="Remove Card" />
-                        </q-item>
-                        <q-item v-close-overlay>
-                          <q-item-main label="Send Feedback" />
-                        </q-item>
-                        <q-item v-close-overlay>
-                          <q-item-main label="Share" />
-                        </q-item>
-                      </q-list>
-                    </q-popover>
-                  </q-icon>
-                </q-card-title>
+        q-card-separator(v-if="workExperiences.length > 0")
+        q-card-main(v-for="workExperience in workExperiences", :key="workExperience._id")
+          q-card
+            q-card-title
+              span.job-title {{ workExperience.jobTitle }}
+              span(slot="subtitle") {{ workExperience.from + ' - ' + workExperience.to }}
+              q-icon(slot="right", name="more_vert")
+                q-popover
+                  q-list.no-border(link)
+                    q-item(v-close-overlay)
+                      q-item-main(label="Edit")
+                    q-item(v-close-overlay)
+                      q-item-main(label="Delete")
+            q-card-main
+              p.work-experience-description {{ workExperience.description }}
 
 </template>
 
@@ -309,4 +298,8 @@ div.profile-form
   .cover-preview
     max-height 140px
     max-width 260px
+  .job-title
+    color: #000
+  .work-experience-description
+    color: #000
 </style>
