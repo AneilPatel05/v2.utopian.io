@@ -7,7 +7,6 @@ const routes = [
   {
     path: '/:locale',
     component: () => import('src/layouts/main'),
-    redirect: '/:locale/login',
     children: [
       {
         path: 'login',
