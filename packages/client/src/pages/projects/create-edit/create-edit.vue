@@ -68,9 +68,7 @@ export default {
     }
   },
   async mounted () {
-    if (!this.user) {
-      this.$router.push({ path: `/${process.env.AUTH_DOMAIN}/login?returnUrl=${this.$route.path}` })
-    } else if (this.$route.params && this.$route.params.slug) {
+    if (this.$route.params && this.$route.params.slug) {
       const result = await this.fetchProject({
         owner: this.$route.params.owner,
         slug: this.$route.params.slug

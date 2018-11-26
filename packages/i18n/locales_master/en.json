@@ -26,6 +26,14 @@
       "update": "Update my article"
     }
   },
+  "components": {
+    "form": {
+      "language": {
+        "label": "Language",
+        "placeholder": "Select a language"
+      }
+    }
+  },
   "fileUpload": {
     "error": {
       "unexpected": "An error occurred while uploading your file."
@@ -110,6 +118,22 @@
       }
     }
   },
+  "editor": {
+    "userSearch": "Search for a user",
+    "userNotFound": "No users found",
+    "findGitIssue": "Insert a link to a Git issue",
+    "findUserName": "Insert a link to a User profile",
+    "uploadImage": "Insert an Image",
+    "markdownPreview": "Markdown Preview",
+    "showMarkdown": "Toggle Markdown View",
+    "showEditor": "Return to Editor",
+    "imageEditor": "Edit your Image",
+    "dragAndDrop": "Drag and drop target",
+    "fileTypeNotSupported": "We only support uploading images.",
+    "gitComingSoon": "Git Repo Search Coming Soon!",
+    "pasteError": "Unable to paste your resource. Try again with the button.",
+    "notAvailableInFullScreen": "This feature not available in full-screen mode."
+  },
   "navbar": {
     "contribute": "contribute",
     "linkSteemAccount": "Link your Steem account",
@@ -181,6 +205,7 @@
         "500": "An unexpected occurred, please contact the support at support@utopian.io",
         "documentDoesNotExist": "The document does not exist.",
         "documentUpdateUnauthorized": "You are not authorized to update this document.",
+        "languageNotSupported": "This language is not currently supported",
         "unauthorized": "You are not authorized to do this action.",
         "updateFail": "An error occurred while updating the data."
       },
@@ -217,7 +242,8 @@
     "signup": {
       "text": "You're almost there!",
       "smallerText": "Please create a unique username to be used in Utopian.",
-      "create": "Create"
+      "create": "Create",
+      "loading": "Creating new user..."
     },
     "steemConnect": {
       "text": "You can connect a Steem account to receive SP rewards.",

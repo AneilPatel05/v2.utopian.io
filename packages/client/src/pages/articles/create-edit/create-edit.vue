@@ -2,15 +2,19 @@
 import { mapActions, mapGetters } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
 import UWysiwyg from 'src/components/form/wysiwyg'
+import UFormLanguages from 'src/components/form/languages'
+
 export default {
   name: 'u-page-articles-create-edit',
   components: {
-    UWysiwyg
+    UWysiwyg,
+    UFormLanguages
   },
   data () {
     return {
       article: {
         body: '',
+        language: '',
         proReview: true,
         title: ''
       }
@@ -19,14 +23,13 @@ export default {
   validations: {
     article: {
       body: { required },
+      language: { required },
       proReview: { required },
       title: { required }
     }
   },
   async mounted () {
-    if (!this.user) {
-      this.$router.push({ path: `/${process.env.AUTH_DOMAIN}/login?returnUrl=${this.$route.path}` })
-    } else if (this.$route.params && this.$route.params.author && this.$route.params.slug) {
+    if (this.$route.params && this.$route.params.author && this.$route.params.slug) {
       const result = await this.fetchArticle({
         author: this.$route.params.author,
         slug: this.$route.params.slug
@@ -82,6 +85,7 @@ div
       :helper="$t('articles.createEdit.body.help')", :error="$v.article.body.$error")
         u-wysiwyg(v-model="article.body", field="body")
     .col-md-4.col-sm-12.col-xs-12
+      u-form-languages(v-model="article.language", field="language", :error="$v.article.language.$error", :required="true")
       q-field(:label="$t('articles.createEdit.proReview.label')")
       q-toggle(
         v-model="article.proReview"
