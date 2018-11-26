@@ -12,10 +12,9 @@ export default {
       let scopes = jwt.decode(cookies.get('access_token')).scopes
   
       if (!scopes.includes('createAccount')) {
-        // redirect('/')
+        redirect('/')
       }
     }
-    // redirect('/')
   },
 
   // component data.

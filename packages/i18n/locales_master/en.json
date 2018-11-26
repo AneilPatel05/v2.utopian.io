@@ -250,6 +250,15 @@
       "smallerText": "You can create a new one if you don't have any.",
       "connect": "Connect",
       "create": "I don't have a Steem account"
+    },
+    "steemCreate": {
+      "text": "Steem creation - WIP.",
+      "smallerText": "Steem creation - wip.",
+      "modal": {
+        "title": "Sorry :(",
+        "message": "You have already claimed a Steem account through Utopian.",
+        "ok": "Go back to app"
+      }
     }
   },
   "errors": {

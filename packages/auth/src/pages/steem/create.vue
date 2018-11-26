@@ -15,22 +15,31 @@ export default {
       this.$router.push('/steem/create')
     },
     goToConnect () {
-      this.$router.push('signup/steem/username')
     }
   },
   async mounted () {
-    alert(await this.hasClaimedBlockchainAccount('steem'))
+    const userHasClaimedSteemAccount = await this.hasClaimedBlockchainAccount('steem')
+
+    if (userHasClaimedSteemAccount) {
+      this.$q.dialog({
+        title: this.$t('auth.steemCreate.modal.title'),
+        message: this.$t('auth.steemCreate.modal.message'),
+        ok: this.$t('auth.steemCreate.modal.ok'),
+        color: 'primary',
+        preventClose: true
+      }).then(() => {
+        if (typeof window !== 'undefined') window.location = this.$route.query.redirectUrl || process.env.UTOPIAN_DOMAIN
+      })
+    }
   }
 }
 </script>
 
 <template lang="pug">
 .u-page-steem-connect
-  .q-subheading.q-mb-sm {{ $t('auth.steemConnect.text') }}
-  .q-body-1.text-grey.q-mb-lg {{ $t('auth.steemConnect.smallerText') }}
+  .q-subheading.q-mb-sm {{ $t('auth.steemCreate.text') }}
+  .q-body-1.text-grey.q-mb-lg {{ $t('auth.steemCreate.smallerText') }}
   .row
-    q-btn.col-xs-12.col-md-3(color="primary", no-caps, :label="$t('auth.steemConnect.connect')", @click="goToConnect", :disabled="true")
-    q-btn.q-mt-sm(flat, color="primary", no-caps, :label="$t('auth.steemConnect.create')", @click="goToCreate")
 
 </template>
 
