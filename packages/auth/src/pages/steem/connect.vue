@@ -3,8 +3,6 @@ export default {
   name: 'u-page-signup',
   data () {
     return {
-      currentStep: 'steem/connect',
-      didMount: false
     }
   },
   methods () {
@@ -18,15 +16,6 @@ export default {
     }
   },
   mounted () {
-    this.currentStep = this.$route.params.step
-    this.$nextTick(function () {
-      this.didMount = true
-    })
-  },
-  watch: {
-    '$route' (to, from) {
-      this.currentStep = to.params.step
-    }
   }
 }
 </script>
