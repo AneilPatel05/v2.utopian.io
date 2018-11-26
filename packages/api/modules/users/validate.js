@@ -102,6 +102,8 @@ module.exports = {
   saveUser,
   getUsersByPartial,
   getUserByUsername: findByUsername,
+  createWorkExperience,
+  updateWorkExperience,
   updateProfileMainInformation,
   updateProfileJob,
   updateProfileImages,

@@ -154,7 +154,6 @@ const createWorkExperience = async (req, h) => {
   throw Boom.badData('users.doesNotExist')
 }
 
-
 /**
  * Update user work experience
  *
@@ -170,18 +169,15 @@ const updateWorkExperience = async (req, h) => {
     throw Boom.unauthorized('general.unauthorized')
   }
 
-  const id = req.params.id;
-
   const user = await User.findOne({ _id: req.auth.credentials.uid })
-  user.workExperiences.id(id) = req.payload
-  const updatedUser = await user.save();
+  user.workExperiences.id(req.params.id).set(req.payload)
+  const updatedUser = await user.save()
   if (updatedUser) {
     return h.response(updatedUser.workExperiences)
   }
 
   throw Boom.badData('users.doesNotExist')
 }
-
 
 module.exports = {
   createUser,
