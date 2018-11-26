@@ -5,14 +5,11 @@ export default {
     return {
     }
   },
-  methods () {
-    return {
-      goToCreate () {
-        this.$router.push('/steem/create')
-      },
-      goToConnect () {
-        this.$router.push('signup/steem/username')
-      }
+  methods: {
+    goToCreate () {
+      this.$router.push({ name: 'steem.create' })
+    },
+    goToConnect () {
     }
   },
   mounted () {
