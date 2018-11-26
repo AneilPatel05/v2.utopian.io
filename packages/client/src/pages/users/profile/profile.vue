@@ -74,6 +74,7 @@ export default {
       }
       this.avatarPreview = result.avatarUrl
       this.coverPreview = result.cover
+      this.workExperiences = result.workExperiences
     }
   },
   methods: {
