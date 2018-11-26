@@ -22,6 +22,11 @@ const routes = [
         path: 'steem/connect',
         name: 'signup.connect',
         component: () => import('src/pages/steem/connect')
+      },
+      {
+        path: 'steem/create',
+        name: 'signup.create',
+        component: () => import('src/pages/steem/create')
       }
     ]
   },

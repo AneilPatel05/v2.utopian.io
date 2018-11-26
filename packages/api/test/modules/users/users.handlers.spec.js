@@ -119,19 +119,19 @@ describe('has claimed blockchain account', () => {
       'Authorization': token
     }
     userClaimedResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
-    userClaimedPayload = userClaimedResponse.payload
+    userClaimedPayload = JSON.parse(userClaimedResponse.payload)
 
     hasClaimedBlockchainAccountEndpoint.headers = {
       'Authorization': secondToken
     }
     userClaimedWithIdResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
-    userClaimedWithIdPayload = userClaimedWithIdResponse.payload
+    userClaimedWithIdPayload = JSON.parse(userClaimedWithIdResponse.payload)
 
     hasClaimedBlockchainAccountEndpoint.headers = {
       'Authorization': thirdToken
     }
     userHasNotClaimedResponse = await global.server.inject(hasClaimedBlockchainAccountEndpoint)
-    userHasNotClaimedPayload = userHasNotClaimedResponse.payload
+    userHasNotClaimedPayload = JSON.parse(userHasNotClaimedResponse.payload)
   })
 
   it('should return a 200 status response', () => {
@@ -141,14 +141,14 @@ describe('has claimed blockchain account', () => {
   })
 
   it('should return true for the user that already claimed', () => {
-    assert.equal(userClaimedPayload, 'true')
+    assert.equal(userClaimedPayload.claimed, true)
   })
 
   it('should return true for the user that claimed with an user id', () => {
-    assert.equal(userClaimedWithIdPayload, 'true')
+    assert.equal(userClaimedWithIdPayload.claimed, true)
   })
 
   it('should return false for the user that has not claimed', () => {
-    assert.equal(userHasNotClaimedPayload, 'false')
+    assert.equal(userHasNotClaimedPayload.claimed, false)
   })
 })

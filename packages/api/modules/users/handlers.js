@@ -32,7 +32,7 @@ const hasClaimedBlockchainAccount = async (req, h) => {
     })).concat({ userId: req.auth.credentials.uid })
   })
 
-  return hasClaimed > 0
+  return h.response({ claimed: hasClaimed > 0 })
 }
 
 /**
