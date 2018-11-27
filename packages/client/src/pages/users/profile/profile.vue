@@ -23,10 +23,6 @@ export default {
         jobTitle: '',
         company: '',
         location: '',
-        fromMonth: '',
-        fromYear: '',
-        toMonth: '',
-        toYear: '',
         current: true,
         description: ''
       },
@@ -47,8 +43,7 @@ export default {
     },
     workExperience: {
       jobTitle: { required },
-      company: { required },
-      from: { required }
+      company: { required }
     },
     skills: {}
   },
@@ -117,6 +112,9 @@ export default {
     async newWorkExperience () {
       this.$v.workExperience.$touch()
       if (!this.$v.workExperience.$invalid) {
+        const fromDate = new Date(this.workExperience.from)
+        this.workExperience.fromMonth = fromDate.getMonth()
+        this.workExperience.fromYear = fromDate.getFullYear()
         const result = await this.createWorkExperience(this.workExperience)
         if (result) {
           this.setAppSuccess(`api.messages.${result}`)
@@ -258,12 +256,16 @@ div.profile-form
               .row.gutter-sm
                 .col-md-3.col-sm-12.col-xs-12
                   q-field(label="From", orientation="vertical")
-                    q-datetime(v-model.trim.lazy="workExperience.from", @keyup.enter="updateWorkExperience")
+                    q-datetime(v-model.trim.lazy="workExperience.from",
+                    format="YYYY/MM"
+                    @keyup.enter="updateWorkExperience")
                 .col-md-3.col-sm-12.col-xs-12
                   q-field(label="To", orientation="vertical")
-                    q-datetime(v-model.trim.lazy="workExperience.to", @keyup.enter="updateWorkExperience")
+                    q-datetime(v-model.trim.lazy="workExperience.to",
+                    format="YYYY/MM"
+                    @keyup.enter="updateWorkExperience")
               q-field(label="Summary", :count="500", orientation="vertical")
-                q-input(v-model="workExperience.summary", type="textarea",
+                q-input(v-model="workExperience.description", type="textarea",
                   maxlength="500", :max-height="150", rows="7")
 
         q-card-separator

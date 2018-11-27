@@ -52,13 +52,16 @@ export const fetchUserProfile = async (context) =>
     url: '/v1/user/profile'
   })
 
-export const createWorkExperience = async (context, data) =>
+export const createWorkExperience = async (context, data) => {
+  delete data.from
+  delete data.to
   API.call({
     context,
     method: 'post',
     url: '/v1/user/profile/workexperience',
     data
   })
+}
 
 export const updateWorkExperience = async (context, workExperience) => {
   const { _id, ...data } = workExperience
@@ -69,6 +72,7 @@ export const updateWorkExperience = async (context, workExperience) => {
     data
   })
 }
+
 export const updateProfileMainInformation = async (context, data) =>
   API.call({
     context,

@@ -145,7 +145,9 @@ const createWorkExperience = async (req, h) => {
   }
 
   const user = await User.findOne({ _id: req.auth.credentials.uid })
-  const newWorkExperience = await user.workExperiences.create(req.payload)
+  const newWorkExperience = user.workExperiences.create(req.payload)
+  user.workExperiences.push(newWorkExperience)
+  await user.save()
 
   if (newWorkExperience) {
     return h.response(newWorkExperience)
@@ -169,11 +171,13 @@ const updateWorkExperience = async (req, h) => {
     throw Boom.unauthorized('general.unauthorized')
   }
 
-  const user = await User.findOne({ _id: req.auth.credentials.uid })
-  user.workExperiences.id(req.params.id).set(req.payload)
-  const updatedUser = await user.save()
-  if (updatedUser) {
-    return h.response(updatedUser.workExperiences)
+  const result = await User.updateOne(
+    { _id: req.auth.credentials.uid, 'workExperiences._id': req.params.id },
+    { $set: { 'workExperiences.$': req.payload } }
+  )
+
+  if (result) {
+    return h.response(result.workExperiences)
   }
 
   throw Boom.badData('users.doesNotExist')
