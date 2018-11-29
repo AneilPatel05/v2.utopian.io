@@ -15,7 +15,7 @@
     "test": "lerna run test --stream",
     "audit:snyk": "lerna run audit:snyk --stream",
     "audit:node_modules": "lerna run audit:node_modules --stream",
-    "audit:licenses": "lerna run audit:audit:licenses --stream",
+    "audit:licenses": "lerna run audit:licenses --stream",
     "test:jest": "lerna run test:jest --no-bail",
     "test:jest:watch": "lerna run test:jest:watch --no-bail",
     "test:webdriver": "lerna run test:webdriver --stream",
@@ -26,10 +26,10 @@
   "devDependencies": {
     "@utopian/i18n": "file:packages/i18n",
     "@utopian/testing": "file:packages/testing",
-    "selenium-standalone": "^6.6.0",
-    "quasar-cli": "^0.17.22",
-    "concurrently": "^4.1.0",
-    "husky": "^1.1.4",
-    "lerna": "^3.4.3"
+    "selenium-standalone": "6.15.4",
+    "quasar-cli": "0.17.22",
+    "concurrently": "4.1.0",
+    "husky": "1.2.0",
+    "lerna": "3.5.0"
   }
 }

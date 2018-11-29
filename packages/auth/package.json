@@ -34,8 +34,8 @@
     "vuelidate": "^0.7.4"
   },
   "devDependencies": {
-    "@utopian/i18n": "^1.0.0",
-    "@utopian/testing": "^1.0.0",
+    "@utopian/i18n": "1.0.0",
+    "@utopian/testing": "1.0.0",
     "babel-eslint": "^10.0.1",
     "concurrently": "^4.1.0",
     "dotenv": "^6.1.0",
@@ -62,7 +62,7 @@
     "typeface-source-sans-pro": "^0.0.54",
     "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17",
-    "webdriverio": "^4.14.0"
+    "webdriverio": "4.14.0"
   },
   "engines": {
     "node": ">= 10.0.0",
