@@ -1,42 +1,84 @@
 # `@utopian/testing`
-There are a number of things to be done that require developer interaction. 
 
-1. `.babelrc` update
-2. Addition of new webpack rules (if using `<test>` template in SFCs)
-3. Manual copy of template folders.
+## Introduction
+This is a repository that maintains templates and hosts peer dependencies, keeping the individual monorepo package sources a bit cleaner.
+
+We are using JEST (jasmine/mocha/chai) and WEBDRIVER (mocha/chai) and currently targeting Chrome and Firefox. Jest builds a version of vue with `jsdom`, so you don't need a running dev server. However, running e2e tests with webdriver does require at least a running local dev server.
+
+###  **A note about testing**
+
+#### Basics
+Remember that unit testing exists to test the atomic functionality of the code. It ensures simplicity and coherence with regard to specific units within the larger scheme of systemic behaviour. If we are testing a button's extended functionality, we don't care if the API really is working, because we assume that the API has been unit tested as well.
+
+e2e testing, on the other hand, makes sure that all of the units (even the ones you haven't tested) work in concert with each other. This is where you want to hit real API's, because this is as close as we will get to interaction with the client devices - and mock's won't cut it.
+
+#### Moving to production
+In order to be certain that our PR from dev to master is perfect, we will be running an extended version of our webdriver configuration on a grid of virtual machines.
+
+## DETAILS
+
+### Root folder commands:
+
+    "test": "lerna run test --stream",
+    "audit:snyk": "lerna run audit:snyk --stream",
+    "audit:node_modules": "lerna run audit:node_modules --stream",
+    "audit:licenses": "lerna run audit:licenses --stream",
+    "test:jest": "lerna run test:jest --no-bail",
+    "test:jest:watch": "lerna run test:jest:watch --no-bail",
+    "test:webdriver": "lerna run test:webdriver --stream",
+    "selenium:install": "selenium-standalone install",
+    "selenium:start": "selenium-standalone start",
+
+
+### Monorepo Package Structure
+```
+└─┬  %package% (API / CLIENT)
+  ├───  .babelrc                // test env settings
+  ├───  jest.config.js          // jest config object
+  └──┬  test
+     ├───  audits               // audit results
+     ├──┬  jest 
+     │  ├───  __tests__         // location of unit tests
+     │  ├───  coverage
+     │  ├──┬  utils
+     │  │  └───  index.js       // rig vue and quasar with ssr
+     │  └───  jest.setup.js     // jest boot setup
+     ├───  lighthouse           // specialized config files
+     ├───  loaders              // webpack loaders for <test> templates
+     └──┬  webdriver
+        ├──┬  config
+        │  ├───  wdio.conf.js 
+        │  └───  wdio.shared.conf.js
+        └───  specs             // location of e2e tests
+```
+
+**Jest**: The config object in `jest.config.js` maintains global settings such as coverage highwater, routes to vue and quasar etc. It calls the `jest.setup.js` before any tests are run.
+
+**Webdriver**: All the configuration for the developement e2e testing process takes place here `wdio.conf.js`. 
 
 ## Features:
-- new monorepo package "testing"
 - simple inclusion of this package will bring in all peer dependencies
-- electron version of beta vue-devtools
+- generate your tests from within .vue SFC files
+- runs Firefox and Chrome headless e2e tests
 
-
-### Vue Dev-Tools
-If you want to use the beta version of the electron vue-devtools (which Denjell highly recommends), you can add this line to your `/src/index.template.html`:
-```
-<script src="http://localhost:8098"></script>
-```
-To read more, see this: 
-
-https://github.com/vuejs/vue-devtools/blob/master/shells/electron/README.md
-
-## Test harnesses:
+### Test harnesses:
 - Jest (Unit)
     - jasmine with added mocha/chai
     - @vue/test-utils
     - no console.log()
-- webdriver (e2e)
+- webdriver.io (e2e)
     - phantom-js
     - testing-bot
     - selenium
-- Quality, Security and Compliance
-    - Lighthouse (PWA)
-    - snyk (node module security)
-    - fossa (license compliance)
-    - yarn audit
+    
+### Quality, Security and Compliance
+- Lighthouse (PWA)
+- snyk (node module security)
+- nlf (open source license collector)
+- yarn audit
 
 ### `<test>` templates in your SFC
-Having everything in one place can help new developers become better acquainted with testing, and have one file to maintain (and be updated by the webpack server). These files are merely copied to the correct spec folder depending on the scope. You may have multiple tests in your file, i.e.:
+Having everything in one place can help developers new to testing become better acquainted with its pitfalls. Working with one SFC component in the HMR mode of Quasar will always generate new test files and the `--watch` mode of Jest will run the latest version of the tests on the latest version of the code. These files are merely copied to the correct spec folder depending on the scope. You may have multiple tests in your file, i.e.:
 ```
 <test lang="jest">
   // your jest test
@@ -81,7 +123,7 @@ Unit testing is functional testing in that the test runner attempts to execute f
 
 #### Jest (e2e)
 
-To run jest tests across 
+To run jest tests across all monorepo packages:
 ``` 
 $ yarn test:jest
 ```
@@ -91,7 +133,7 @@ e2e or integration testing needs to have a running server, because it seeks to m
 
 #### webdriver
 
-To install selenium for your platform during development, run:
+To install selenium for your platform during development, make sure you are in the root directory of the project repository and run:
 ```bash
 $ yarn selenium:install
 ```
@@ -101,9 +143,14 @@ Then to start the selenium server, run:
 $ yarn selenium:start
 ```
 
+Make sure all the dev servers are running:
+```bash
+$ yarn dev
+```
+
 Finally to execute the e2e tests: 
 ``` 
-$ lerna run test:webdriver --stream
+$ yarn test:webdriver
 ```
 
 See http://webdriver.io/api.html 
@@ -116,3 +163,22 @@ Other little nicenesses
 - SNYK: https://snyk.io/docs/using-snyk/
 - yarn audit
 - licenses
+
+
+## Vue Dev-Tools
+If you want to use the beta version of the electron vue-devtools (which Denjell highly recommends), you can add this line to your `/src/index.template.html`:
+```
+<script src="http://localhost:8098"></script>
+```
+To read more, see this: 
+
+https://github.com/vuejs/vue-devtools/blob/master/shells/electron/README.md
+
+
+## HACKING ON/WITH THIS REPO
+There are a number of things to be done that require developer interaction. 
+
+1. `.babelrc` update
+2. Addition of new webpack rules to `quasar.conf.js` (if using `<test>` template in SFCs)
+3. Manual copy of template folders.
+4. Careful management of routes / ports etc.
