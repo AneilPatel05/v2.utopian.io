@@ -47,10 +47,8 @@ const createWorkExperience = {
     jobTitle: Joi.string().trim().required(),
     company: Joi.string().trim().optional().allow(''),
     location: Joi.string().trim().optional().allow(''),
-    fromMonth: Joi.number().integer().min(1).max(12),
-    fromYear: Joi.number().integer().min(1900).max(9999),
-    toMonth: Joi.number().integer().min(1).max(12),
-    toYear: Joi.number().integer().min(1900).max(9999),
+    startDate: Joi.date(),
+    endDate: Joi.date(),
     current: Joi.boolean(),
     description: Joi.string().trim().optional().allow('')
   }
@@ -66,10 +64,8 @@ const updateWorkExperience = {
     jobTitle: Joi.string().trim().required(),
     company: Joi.string().trim().optional().allow(''),
     location: Joi.string().trim().optional().allow(''),
-    fromMonth: Joi.number().integer().min(1).max(12),
-    fromYear: Joi.number().integer().min(1900).max(9999),
-    toMonth: Joi.number().integer().min(1).max(12),
-    toYear: Joi.number().integer().min(1900).max(9999),
+    startDate: Joi.date(),
+    endDate: Joi.date(),
     current: Joi.boolean(),
     description: Joi.string().trim().optional().allow('')
   }

@@ -52,10 +52,23 @@ export const fetchUserProfile = async (context) =>
     url: '/v1/user/profile'
   })
 
+/**
+ * Search users in the database matching the string
+ *
+ * @param {integer} id - work experience document id
+ * @returns {Object} - list of matching users
+ * @author East Mael
+ */
+export const getWorkExperience = async (context, _id) => {
+  return API.call({
+    context,
+    method: 'get',
+    url: `/v1/user/profile/workexperience/${_id}`
+  })
+}
+
 export const createWorkExperience = async (context, data) => {
-  delete data.from
-  delete data.to
-  API.call({
+  return API.call({
     context,
     method: 'post',
     url: '/v1/user/profile/workexperience',

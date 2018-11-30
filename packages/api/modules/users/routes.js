@@ -90,6 +90,14 @@ routes.push([
     }
   },
   {
+    method: 'GET',
+    path: '/v1/user/profile/workexperience/{id}',
+    handler: (req, h) => Handlers.getWorkExperience(req, h),
+    options: {
+      tags: ['users']
+    }
+  },
+  {
     method: 'POST',
     path: '/v1/user/profile/workexperience/{id}',
     handler: (req, h) => Handlers.updateWorkExperience(req, h),

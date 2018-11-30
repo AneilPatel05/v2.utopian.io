@@ -27,6 +27,8 @@ export default {
         description: ''
       },
       workExperiences: [],
+      mode: 'create',
+      collapsed: false,
       images: {
         avatarUrl: '',
         cover: ''
@@ -77,6 +79,7 @@ export default {
       'fetchUserProfile',
       'createWorkExperience',
       'updateWorkExperience',
+      'getWorkExperience',
       'updateProfileMainInformation',
       'updateProfileJob',
       'updateProfileImages'
@@ -112,17 +115,37 @@ export default {
     async newWorkExperience () {
       this.$v.workExperience.$touch()
       if (!this.$v.workExperience.$invalid) {
-        const fromDate = new Date(this.workExperience.from)
-        this.workExperience.fromMonth = fromDate.getMonth()
-        this.workExperience.fromYear = fromDate.getFullYear()
         const result = await this.createWorkExperience(this.workExperience)
         if (result) {
-          this.setAppSuccess(`api.messages.${result}`)
+          this.workExperiences = result
         }
       }
     },
+    async loadWorkExperience (id) {
+      this.workExperience = await this.getWorkExperience(id)
+      this.mode = 'update'
+      this.collapsed = true
+    },
     async editWorkExperience () {
-      console.log('TODO: update work experience')
+      this.$v.workExperience.$touch()
+      if (!this.$v.workExperience.$invalid) {
+        const result = await this.updateWorkExperience(this.workExperience)
+        if (result) {
+          this.workExperiences = result
+          this.collapsed = false
+        }
+      }
+    },
+    openForm () {
+      this.workExperience = {
+        jobTitle: '',
+        company: '',
+        location: '',
+        current: true,
+        description: ''
+      }
+      this.collapsed = true
+      this.mode = 'create'
     },
     async updateMainInformation () {
       this.$v.mainInformation.$touch()
@@ -246,43 +269,46 @@ div.profile-form
     .col-md-6.col-sm-12.col-xs-12
       h4.q-mb-sm Work Experiences
       q-card(square, color="white")
-        q-card-main
-          q-collapsible(label="Work Experiences", collapse-icon="add_circle_outline", opened=true)
-            div
-              q-field(label="Job title", orientation="vertical")
-                q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="updateWorkExperience")
-              q-field(label="Company", orientation="vertical")
-                q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="updateWorkExperience")
-              .row.gutter-sm
-                .col-md-3.col-sm-12.col-xs-12
-                  q-field(label="From", orientation="vertical")
-                    q-datetime(v-model.trim.lazy="workExperience.from",
-                    format="YYYY/MM"
-                    @keyup.enter="updateWorkExperience")
-                .col-md-3.col-sm-12.col-xs-12
-                  q-field(label="To", orientation="vertical")
-                    q-datetime(v-model.trim.lazy="workExperience.to",
-                    format="YYYY/MM"
-                    @keyup.enter="updateWorkExperience")
-              q-field(label="Summary", :count="500", orientation="vertical")
-                q-input(v-model="workExperience.description", type="textarea",
-                  maxlength="500", :max-height="150", rows="7")
+        q-card-title
+          q-icon(slot="right")
+            q-btn(round, dense, color="primary", size="md", icon="add_circle_outline", @click="openForm")
 
-        q-card-separator
-        q-card-actions(align="end")
-          q-field
-            q-btn(color="primary", label="Save", @click="newWorkExperience")
+        q-card-main(:class="collapsed ? '' : 'hidden'")
+          div
+            q-field(label="Job title", orientation="vertical")
+              q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="editWorkExperience")
+            q-field(label="Company", orientation="vertical")
+              q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="editWorkExperience")
+            .row.gutter-sm
+              .col-md-3.col-sm-12.col-xs-12
+                q-field(label="From", orientation="vertical")
+                  q-datetime(v-model.trim.lazy="workExperience.startDate",
+                  format="YYYY/MM"
+                  @keyup.enter="editWorkExperience")
+              .col-md-3.col-sm-12.col-xs-12
+                q-field(label="To", orientation="vertical")
+                  q-datetime(v-model.trim.lazy="workExperience.endDate",
+                  format="YYYY/MM"
+                  @keyup.enter="editWorkExperience")
+            q-field(label="Summary", :count="500", orientation="vertical")
+              q-input(v-model="workExperience.description", type="textarea",
+                maxlength="500", :max-height="150", rows="7")
+            q-card-separator
+            q-card-actions(align="end")
+              q-field
+                q-btn(v-if="mode === 'create'", color="primary", label="Create", @click="newWorkExperience")
+                q-btn(v-if="mode === 'update'", color="primary", label="Update", @click="editWorkExperience")
 
         q-card-separator(v-if="workExperiences.length > 0")
         q-card-main(v-for="workExperience in workExperiences", :key="workExperience._id")
           q-card
             q-card-title
               span.job-title {{ workExperience.jobTitle }}
-              span(slot="subtitle") {{ workExperience.from + ' - ' + workExperience.to }}
+              span(slot="subtitle") {{ workExperience.company + ' : ' + workExperience.startDate + ' - ' + workExperience.endDate }}
               q-icon(slot="right", name="more_vert")
                 q-popover
                   q-list.no-border(link)
-                    q-item(v-close-overlay)
+                    q-item(v-close-overlay, @click.native="loadWorkExperience(workExperience._id)")
                       q-item-main(label="Edit")
                     q-item(v-close-overlay)
                       q-item-main(label="Delete")
