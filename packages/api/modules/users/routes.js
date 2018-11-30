@@ -105,6 +105,14 @@ routes.push([
       tags: ['users'],
       validate: Validate.updateWorkExperience
     }
+  },
+  {
+    method: 'POST',
+    path: '/v1/user/profile/workexperience/{id}/remove',
+    handler: (req, h) => Handlers.deleteWorkExperience(req, h),
+    options: {
+      tags: ['users']
+    }
   }
 ])
 

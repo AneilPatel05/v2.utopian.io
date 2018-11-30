@@ -212,6 +212,32 @@ const updateWorkExperience = async (req, h) => {
   throw Boom.badData('users.doesNotExist')
 }
 
+/**
+ * Delete work experience
+ *
+ * @param {object} req - request
+ * @param {object} h - response
+ * @payload {object} req.payload
+ *
+ * @returns updated work experience
+ * @author East Mael
+ */
+const deleteWorkExperience = async (req, h) => {
+  if (!req.auth.credentials.uid) {
+    throw Boom.unauthorized('general.unauthorized')
+  }
+
+  const user = await User.findOne({ _id: req.auth.credentials.uid })
+  user.workExperiences.pull(req.params.id)
+  const result = await user.save()
+
+  if (result) {
+    return h.response(user.workExperiences)
+  }
+
+  throw Boom.badData('users.doesNotExist')
+}
+
 module.exports = {
   createUser,
   getUsersByPartial,
@@ -221,5 +247,6 @@ module.exports = {
   createWorkExperience,
   updateWorkExperience,
   getWorkExperience,
+  deleteWorkExperience,
   isUsernameAvailable
 }

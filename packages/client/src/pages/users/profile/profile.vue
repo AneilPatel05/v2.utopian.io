@@ -82,6 +82,7 @@ export default {
       'createWorkExperience',
       'updateWorkExperience',
       'getWorkExperience',
+      'deleteWorkExperience',
       'updateProfileMainInformation',
       'updateProfileJob',
       'updateProfileImages'
@@ -158,6 +159,19 @@ export default {
       if (this.workExperience.current) {
         this.workExperience.endDate = ''
       }
+    },
+    async removeWorkExperience (id) {
+      this.$q.dialog({
+        title: 'Remove Work Experience',
+        message: 'Are you sure you want to remove this experience?',
+        ok: 'Yes',
+        cancel: 'No'
+      }).then(async () => {
+        const result = await this.deleteWorkExperience(id)
+        if (result) {
+          this.workExperiences = result
+        }
+      })
     },
     async updateMainInformation () {
       this.$v.mainInformation.$touch()
@@ -324,7 +338,7 @@ div.profile-form
                   q-list.no-border(link)
                     q-item(v-close-overlay, @click.native="loadWorkExperience(workExperience._id)")
                       q-item-main(label="Edit")
-                    q-item(v-close-overlay)
+                    q-item(v-close-overlay, @click.native="removeWorkExperience(workExperience._id)")
                       q-item-main(label="Delete")
             q-card-main
               p.work-experience-description {{ workExperience.description }}
