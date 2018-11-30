@@ -19,5 +19,6 @@
     "@utopian/i18n": "file:packages/i18n",
     "husky": "^1.1.4",
     "lerna": "^3.4.3"
-  }
+  },
+  "version": "1.12.3"
 }

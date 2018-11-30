@@ -1,6 +1,6 @@
 <script>
-import { Notify } from 'quasar'
 import { mapActions, mapGetters } from 'vuex'
+import { Notify } from 'quasar'
 import authPlugin from 'src/plugins/auth'
 
 export default {
