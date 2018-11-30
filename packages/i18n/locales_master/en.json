@@ -36,6 +36,14 @@
         "label": "Language",
         "placeholder": "Select a language"
       }
+    },
+    "tools": {
+      "socialShare": {
+        "copyToClipboard": {
+          "label": "Copy",
+          "success": "Url copied to clipboard"
+        }
+      }
     }
   },
   "fileUpload": {

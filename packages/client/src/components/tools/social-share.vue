@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'u-social-share',
   props: ['title', 'description'],
@@ -45,6 +47,7 @@ export default {
     this.popup.top = ((height / 2) - (this.popup.height / 2)) + dualScreenTop;
   },
   methods: {
+    ...mapActions('utils', ['setAppSuccess']),
     share (network) {
       if (this.popup.window) {
         this.popup.window.close()
@@ -70,6 +73,26 @@ export default {
         `${url}${param.key}=${(param.value || this[param.prop])}&`
       , '?')
       return this.networks[network].url + params
+    },
+    copyToClipboard () {
+      const el = document.createElement('textarea')
+      el.value = `${process.env.UTOPIAN_DOMAIN}${this.$route.path}`
+      el.setAttribute('readonly', '')
+      el.style.position = 'absolute'
+      el.style.left = '-9999px'
+      document.body.appendChild(el)
+      const selected =
+        document.getSelection().rangeCount > 0
+          ? document.getSelection().getRangeAt(0)
+          : false
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+      if (selected) {
+        document.getSelection().removeAllRanges()
+        document.getSelection().addRange(selected)
+      }
+      this.setAppSuccess('components.tools.socialShare.copyToClipboard.success')
     }
   }
 }
@@ -85,4 +108,7 @@ q-btn.social-share(icon="mdi-share-variant", outline, color="black")
       q-item(dense, @click.native="() => share('twitter')")
         q-item-side(icon="mdi-twitter")
         q-item-main(label="Twitter")
+      q-item(dense, @click.native="copyToClipboard")
+        q-item-side(icon="mdi-clipboard")
+        q-item-main(:label="$t('components.tools.socialShare.copyToClipboard.label')")
 </template>
