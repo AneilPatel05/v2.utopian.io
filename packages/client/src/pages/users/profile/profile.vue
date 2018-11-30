@@ -24,6 +24,8 @@ export default {
         company: '',
         location: '',
         current: true,
+        startDate: '',
+        endDate: '',
         description: ''
       },
       workExperiences: [],
@@ -118,7 +120,23 @@ export default {
         const result = await this.createWorkExperience(this.workExperience)
         if (result) {
           this.workExperiences = result
+          this.clearWorkExperienceForm()
+          this.collapsed = false
         }
+      }
+    },
+    openWorkExperienceForm () {
+      this.clearWorkExperienceForm()
+      this.collapsed = true
+      this.mode = 'create'
+    },
+    clearWorkExperienceForm () {
+      this.workExperience = {
+        jobTitle: '',
+        company: '',
+        location: '',
+        current: true,
+        description: ''
       }
     },
     async loadWorkExperience (id) {
@@ -136,16 +154,10 @@ export default {
         }
       }
     },
-    openForm () {
-      this.workExperience = {
-        jobTitle: '',
-        company: '',
-        location: '',
-        current: true,
-        description: ''
+    toggleEndDate () {
+      if (this.workExperience.current) {
+        this.workExperience.endDate = ''
       }
-      this.collapsed = true
-      this.mode = 'create'
     },
     async updateMainInformation () {
       this.$v.mainInformation.$touch()
@@ -271,7 +283,7 @@ div.profile-form
       q-card(square, color="white")
         q-card-title
           q-icon(slot="right")
-            q-btn(round, dense, color="primary", size="md", icon="add_circle_outline", @click="openForm")
+            q-btn(round, dense, color="primary", size="md", icon="add_circle_outline", @click="openWorkExperienceForm")
 
         q-card-main(:class="collapsed ? '' : 'hidden'")
           div
@@ -279,13 +291,15 @@ div.profile-form
               q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="editWorkExperience")
             q-field(label="Company", orientation="vertical")
               q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="editWorkExperience")
+            q-field
+              q-checkbox(v-model="workExperience.current", @input="toggleEndDate", label="Current")
             .row.gutter-sm
               .col-md-3.col-sm-12.col-xs-12
                 q-field(label="From", orientation="vertical")
                   q-datetime(v-model.trim.lazy="workExperience.startDate",
                   format="YYYY/MM"
                   @keyup.enter="editWorkExperience")
-              .col-md-3.col-sm-12.col-xs-12
+              .col-md-3.col-sm-12.col-xs-12(:class="workExperience.current ? 'hidden' : ''")
                 q-field(label="To", orientation="vertical")
                   q-datetime(v-model.trim.lazy="workExperience.endDate",
                   format="YYYY/MM"
@@ -304,7 +318,7 @@ div.profile-form
           q-card
             q-card-title
               span.job-title {{ workExperience.jobTitle }}
-              span(slot="subtitle") {{ workExperience.company + ' : ' + workExperience.startDate + ' - ' + workExperience.endDate }}
+              span(slot="subtitle") {{ workExperience.company + ' : ' + workExperience.startDate + (workExperience.endDate ? ' - ' + workExperience.endDate : '') }}
               q-icon(slot="right", name="more_vert")
                 q-popover
                   q-list.no-border(link)
@@ -327,6 +341,8 @@ div.profile-form
   .cover-preview
     max-height 140px
     max-width 260px
+  .q-option-label
+    color #000 !important
   .job-title
     color: #000
   .work-experience-description
