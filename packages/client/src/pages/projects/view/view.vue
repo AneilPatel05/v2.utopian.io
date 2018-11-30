@@ -28,7 +28,7 @@ export default {
         twitterTitle: { name: 'twitter:title', content: this.project.name },
         twitterDescription: { name: 'twitter:description', content: this.project.description.length <= 200 ? this.project.description : `${this.project.description.substr(0, 197)}...` },
         twitterCreator: { name: 'twitter:creator', content: `@${this.project.owners[0].username}` },
-        twitterImageSrc: { name: 'twitter:image:src', content: this.project.medias.find((m) => m.type === 'image').src },
+        twitterImageSrc: { name: 'twitter:image', content: this.project.medias.find((m) => m.type === 'image').src },
         // Facebook Open Graph data
         ogTitle: { property: 'og:title', content: this.project.name },
         ogImage: { property: 'og:image', content: this.project.medias.find((m) => m.type === 'image').src },
