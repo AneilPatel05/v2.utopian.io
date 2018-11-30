@@ -37,14 +37,14 @@ export default {
      * Center the popup on dual screens
      * http://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen/32261263
      */
-    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
-    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top
 
-    const width = window.innerWidth ? window.innerWidth : (document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width);
-    const height = window.innerHeight ? window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height);
+    const width = window.innerWidth ? window.innerWidth : (document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width)
+    const height = window.innerHeight ? window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height)
 
-    this.popup.left = ((width / 2) - (this.popup.width / 2)) + dualScreenLeft;
-    this.popup.top = ((height / 2) - (this.popup.height / 2)) + dualScreenTop;
+    this.popup.left = ((width / 2) - (this.popup.width / 2)) + dualScreenLeft
+    this.popup.top = ((height / 2) - (this.popup.height / 2)) + dualScreenTop
   },
   methods: {
     ...mapActions('utils', ['setAppSuccess']),
