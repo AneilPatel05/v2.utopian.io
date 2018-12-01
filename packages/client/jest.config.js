@@ -16,20 +16,25 @@ module.exports = {
 	],
 	coverageThreshold: {
 		global: {
-			branches: 100,
-			functions: 100,
-			lines: 100,
-			statements: 100
+			branches: 50,
+			functions: 50,
+			lines: 50,
+			statements: 50
 		}
 	},
+  watchPathIgnorePatterns: [
+    // only watch for test file changes!!!
+    '<rootDir>/*',
+  ],
 	testMatch: [
 		'<rootDir>/test/jest/__tests__/**/*.spec.js',
 		'<rootDir>/test/jest/__tests__/**/*.test.js',
-		'<rootDir>/src/**/__tests__/*.spec.js'
+		'<rootDir>/src/**/__tests__/*jest.spec.js'
 	],
 	moduleFileExtensions: [
 		'js',
-		'vue'
+		'vue',
+    'json'
 	],
 	moduleNameMapper: {
 		'^vue$': '<rootDir>/node_modules/vue/dist/vue.common.js',
@@ -42,6 +47,6 @@ module.exports = {
 		'.*\\.js$': '<rootDir>/../testing/node_modules/babel-jest'
 	},
 	snapshotSerializers: [
-		'<rootDir>/../testing/node_modules/jest-serializer-vue'
+		// '<rootDir>/../testing/node_modules/jest-serializer-vue'
 	]
 }

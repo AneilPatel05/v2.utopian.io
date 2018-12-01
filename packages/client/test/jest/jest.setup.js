@@ -1,7 +1,11 @@
 // No console.log() / setTimeout
-// console.log = jest.fn(() => { throw new Error('Do not use console.log()') })
-
+console.log = jest.fn(() => { throw new Error('Do not use console.log()') })
 jest.setTimeout(1000)
+
+// jest speedup when errors are part of the game
+Error.stackTraceLimit = 0
+
+
 global.Promise = require('promise')
 
 // see https://github.com/phanan/vue-test-helpers for wrapper info
@@ -31,3 +35,8 @@ global.expect = (actual) => {
 	const chaiMatchers = chai.expect(actual)
 	return Object.assign(chaiMatchers, originalMatchers)
 }
+
+// do this to make sure we don't get multiple hits from both webpacks
+setTimeout(()=>{
+  // do nothing
+}, 1)

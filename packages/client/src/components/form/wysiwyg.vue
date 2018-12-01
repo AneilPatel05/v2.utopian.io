@@ -779,22 +779,14 @@ export default {
 </style>
 
 <test lang="jest">
-import { mount, createLocalVue } from '@vue/test-utils'
-import wysiwyg from '@/components/form/wysiwyg.vue'
-import Quasar, { Qbtn } from 'quasar'
-
-describe('First test of the test SFC', () => {
-  const localVue = createLocalVue()
-  localVue.use(Quasar, { components: ['QBtn']})
-  const wrapper = mount({
-    localVue
-  })
-  const vm = wrapper.vm
-
-  it('passes the sanity check and creates a wrapper', () => {
-    expect(wrapper.isVueInstance()).toBe(true)
+import { mountQuasar } from '~/test/jest/utils'
+import wysiwyg from '../wysiwyg.vue'
+describe('Test the SFC!', () => {
+  it('Quasar init and vue lives!!!', () => {
+    mountQuasar(wysiwyg, {
+      cookies: false
+    })
   })
 })
-
-// extra comment !!!!!!!
+// console.log
 </test>

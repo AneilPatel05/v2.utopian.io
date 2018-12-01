@@ -80,6 +80,7 @@
     "promise": "8.0.2",
     "pug": "2.0.3",
     "ramda": "0.25.0",
+    "regenerator-runtime": "0.13.1",
     "snyk": "1.110.2",
     "vue-jest": "2.6.0",
     "vue-test-helpers": "2.0.0",

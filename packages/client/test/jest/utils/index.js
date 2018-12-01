@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 import Quasar, { Cookies } from 'quasar'
 
 require('babel-core').transform('code', {
-	plugins: ['dynamic-import-node']
+  plugins: ['dynamic-import-node']
 })
 
 const mockSsrContext = () => {
@@ -45,14 +45,19 @@ export const mountQuasar = (component, options = {}) => {
 				plugin({ app, store, router, Vue: localVue, ssrContext })
 			})
 		}
-	}
+  }
+
+  // mock the i18n
+  const $t = () => {}
+  const $n = () => {}
+  const $d = () => {}
 
 	return shallowMount(component, {
 		localVue: localVue,
 		store,
 		router,
-		i18n: app.i18n,
-		// Injections for Components with a QPage root Element
+    mocks:{ $t, $n, $d },
+    // Injections for Components with a QPage root Element
 		// todo: make this Utopion v2 compliant
 		provide: {
 			pageContainer: true,

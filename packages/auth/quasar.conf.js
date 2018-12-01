@@ -65,6 +65,14 @@ module.exports = function (ctx) {
               debug: false
             }]
           ])
+        chain.module.rule('jest')
+          .test(/\.jest$/)
+          .use('jest')
+            .loader(require.resolve('./test/loaders/jest-loader.js'))
+        chain.module.rule('wdio')
+          .test(/\.wdio$/)
+          .use('wdio')
+            .loader(require.resolve('./test/loaders/wdio-loader.js'))
       }
     },
     // dev server configuration.
