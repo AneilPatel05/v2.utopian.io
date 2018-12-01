@@ -3,7 +3,7 @@ import QBUTTON from './QBtn-demo.vue'
 import Quasar, { Qbtn } from 'quasar'
 
 describe('Render, build and wire up a quasar component', () => {
-  const localVue = createLocalVue();
+  const localVue = createLocalVue()
   localVue.use(Quasar, { components: ['QBtn']})
   const wrapper = mount(QBUTTON, {
     localVue

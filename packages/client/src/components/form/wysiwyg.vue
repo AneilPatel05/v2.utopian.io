@@ -1,6 +1,5 @@
 <script crossorigin="anonymous">
 import { mapActions } from 'vuex'
-
 export default {
   name: 'u-wysiwyg',
   props: ['value', 'field'],
@@ -16,7 +15,6 @@ export default {
       })
     }
   /*
-
       // helpful: https://code.flickr.net/2012/12/10/drag-n-drop/
       // https://github.com/github/paste-markdown/blob/master/src/paste-markdown-image-link.js
 
@@ -687,7 +685,7 @@ export default {
         )
 
     // FYI, the following is merely using the quasar class styling to stay visually identical.
-    .q-editor.markdown(v-if="showMarkdown")
+    .q-editor.markdown.z-top(v-if="showMarkdown")
       .q-editor-toolbar.row.full-width
         h4(style="margin: auto 0 6px 10px")
           strong {{ $t('editor.markdownPreview') }}
@@ -779,3 +777,24 @@ export default {
     border 4px transparent
     opacity 1
 </style>
+
+<test lang="jest">
+import { mount, createLocalVue } from '@vue/test-utils'
+import wysiwyg from '@/components/form/wysiwyg.vue'
+import Quasar, { Qbtn } from 'quasar'
+
+describe('First test of the test SFC', () => {
+  const localVue = createLocalVue()
+  localVue.use(Quasar, { components: ['QBtn']})
+  const wrapper = mount({
+    localVue
+  })
+  const vm = wrapper.vm
+
+  it('passes the sanity check and creates a wrapper', () => {
+    expect(wrapper.isVueInstance()).toBe(true)
+  })
+})
+
+// extra comment !!!!!!!
+</test>

@@ -67,7 +67,7 @@ module.exports = function (ctx) {
           .set('~', __dirname)
           .set('@', path.resolve(__dirname, 'src'))
         // normalize the global => good for some non-isomorphic modules
-        chain.output.set('globalObject', 'this')
+        // chain.output.set('globalObject', 'this')
         chain.plugin('i18n')
           .use(I18N, [
             [{

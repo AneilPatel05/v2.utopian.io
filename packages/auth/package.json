@@ -17,6 +17,7 @@
     "serve:dist": "nodemon dist/ssr-mat/index.js",
     "serve:test:coverage": "quasar serve test/coverage/lcov-report/ --port 8788",
     "serve:test:lighthouse": "quasar serve test/lighthouse/reports/ --port 8789",
+    "test": "yarn run lint",
     "test:jest": "../testing/node_modules/.bin/jest --coverage",
     "test:jest:watch": "../testing/node_modules/.bin/jest --coverage --watch",
     "test:webdriver": "./node_modules/.bin/wdio ./test/webdriver/config/wdio.conf.js",
