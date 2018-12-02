@@ -38,34 +38,17 @@ const saveUser = {
 }
 
 /**
- * Create a user's work experience
+ * Validate a user's work experience
  *
  * @author East Mael
  */
-const createWorkExperience = {
+const workExperience = {
   payload: {
     jobTitle: Joi.string().trim().required(),
     company: Joi.string().trim().optional().allow(''),
     location: Joi.string().trim().optional().allow(''),
     startDate: Joi.date(),
-    endDate: Joi.date(),
-    current: Joi.boolean(),
-    description: Joi.string().trim().optional().allow('')
-  }
-}
-
-/**
- * Update a user's work experience
- *
- * @author East Mael
- */
-const updateWorkExperience = {
-  payload: {
-    jobTitle: Joi.string().trim().required(),
-    company: Joi.string().trim().optional().allow(''),
-    location: Joi.string().trim().optional().allow(''),
-    startDate: Joi.date(),
-    endDate: Joi.date(),
+    endDate: Joi.date().allow(null),
     current: Joi.boolean(),
     description: Joi.string().trim().optional().allow('')
   }
@@ -98,8 +81,7 @@ module.exports = {
   saveUser,
   getUsersByPartial,
   getUserByUsername: findByUsername,
-  createWorkExperience,
-  updateWorkExperience,
+  workExperience,
   updateProfileMainInformation,
   updateProfileJob,
   updateProfileImages,

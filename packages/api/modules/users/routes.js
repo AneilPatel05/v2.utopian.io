@@ -86,7 +86,7 @@ routes.push([
     handler: (req, h) => Handlers.createWorkExperience(req, h),
     options: {
       tags: ['users'],
-      validate: Validate.createWorkExperience
+      validate: Validate.workExperience
     }
   },
   {
@@ -103,7 +103,7 @@ routes.push([
     handler: (req, h) => Handlers.updateWorkExperience(req, h),
     options: {
       tags: ['users'],
-      validate: Validate.updateWorkExperience
+      validate: Validate.workExperience
     }
   },
   {

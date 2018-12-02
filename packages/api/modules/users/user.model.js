@@ -54,7 +54,10 @@ const users = new Schema({
       required: true
     },
     location: { type: String },
-    startDate: { type: Date },
+    startDate: {
+      type: Date,
+      required: true
+    },
     endDate: { type: Date },
     current: {
       type: Boolean,

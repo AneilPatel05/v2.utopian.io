@@ -37,19 +37,28 @@ export default {
       }
     }
   },
-  validations: {
-    mainInformation: {
-      email: { email }
-    },
-    images: {
-      avatarUrl: { required, url },
-      cover: { url }
-    },
-    workExperience: {
-      jobTitle: { required },
-      company: { required }
-    },
-    skills: {}
+  validations () {
+    let validations = {
+      mainInformation: {
+        email: { email }
+      },
+      images: {
+        avatarUrl: { required, url },
+        cover: { url }
+      },
+      workExperience: {
+        jobTitle: { required },
+        company: { required },
+        startDate: { required },
+        endDate: {}
+      },
+      skills: {}
+    }
+
+    if (!this.workExperience.current) {
+      validations.workExperience.endDate = { required }
+    }
+    return validations
   },
   async mounted () {
     const result = await this.fetchUserProfile()
@@ -302,20 +311,20 @@ div.profile-form
 
         q-card-main(:class="collapsed ? '' : 'hidden'")
           div
-            q-field(:label="$t('users.profile.workExperience.jobTitle')", orientation="vertical")
+            q-field(:label="`${$t('users.profile.workExperience.jobTitle')}*`", orientation="vertical", :error="$v.workExperience.jobTitle.$error")
               q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="editWorkExperience")
-            q-field(:label="$t('users.profile.workExperience.company')", orientation="vertical")
+            q-field(:label="`${$t('users.profile.workExperience.company')}*`", orientation="vertical", :error="$v.workExperience.company.$error")
               q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="editWorkExperience")
             q-field
               q-checkbox(v-model="workExperience.current", @input="toggleEndDate", :label="$t('users.profile.workExperience.current')")
             .row.gutter-sm
               .col-md-3.col-sm-12.col-xs-12
-                q-field(:label="$t('users.profile.workExperience.from')", orientation="vertical")
+                q-field(:label="`${$t('users.profile.workExperience.from')}*`", orientation="vertical", :error="$v.workExperience.startDate.$error")
                   q-datetime(v-model.trim.lazy="workExperience.startDate",
                   format="YYYY/MM"
                   @keyup.enter="editWorkExperience")
               .col-md-3.col-sm-12.col-xs-12(:class="workExperience.current ? 'hidden' : ''")
-                q-field(:label="$t('users.profile.workExperience.to')", orientation="vertical")
+                q-field(:label="`${$t('users.profile.workExperience.to')}*`", orientation="vertical", :error="$v.workExperience.endDate.$error")
                   q-datetime(v-model.trim.lazy="workExperience.endDate",
                   format="YYYY/MM"
                   @keyup.enter="editWorkExperience")
