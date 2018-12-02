@@ -193,6 +193,19 @@
       "update": "Update",
       "username": {
         "label": "Utopian username"
+      },
+      "workExperience": {
+        "label": "Work Experiences",
+        "jobTitle": "Job Title",
+        "company": "Company",
+        "current": "Current",
+        "from": "From",
+        "to": "To",
+        "summary": "Summary",
+        "create": "Create",
+        "update": "Update",
+        "edit": "Edit",
+        "delete": "Delete"
       }
     },
     "search": {

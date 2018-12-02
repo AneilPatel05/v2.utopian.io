@@ -293,7 +293,7 @@ div.profile-form
           q-btn(color="primary", :label="$t('users.profile.update')", @click="updateSkills")
 
     .col-md-6.col-sm-12.col-xs-12
-      h4.q-mb-sm Work Experiences
+      h4.q-mb-sm {{ $t('users.profile.workExperience.label') }}
       q-card(square, color="white")
         q-card-title
           q-icon(slot="right")
@@ -301,31 +301,31 @@ div.profile-form
 
         q-card-main(:class="collapsed ? '' : 'hidden'")
           div
-            q-field(label="Job title", orientation="vertical")
+            q-field(:label="$t('users.profile.workExperience.jobTitle')", orientation="vertical")
               q-input(v-model.trim.lazy="workExperience.jobTitle", @keyup.enter="editWorkExperience")
-            q-field(label="Company", orientation="vertical")
+            q-field(:label="$t('users.profile.workExperience.company')", orientation="vertical")
               q-input(v-model.trim.lazy="workExperience.company", @keyup.enter="editWorkExperience")
             q-field
-              q-checkbox(v-model="workExperience.current", @input="toggleEndDate", label="Current")
+              q-checkbox(v-model="workExperience.current", @input="toggleEndDate", :label="$t('users.profile.workExperience.current')")
             .row.gutter-sm
               .col-md-3.col-sm-12.col-xs-12
-                q-field(label="From", orientation="vertical")
+                q-field(:label="$t('users.profile.workExperience.from')", orientation="vertical")
                   q-datetime(v-model.trim.lazy="workExperience.startDate",
                   format="YYYY/MM"
                   @keyup.enter="editWorkExperience")
               .col-md-3.col-sm-12.col-xs-12(:class="workExperience.current ? 'hidden' : ''")
-                q-field(label="To", orientation="vertical")
+                q-field(:label="$t('users.profile.workExperience.to')", orientation="vertical")
                   q-datetime(v-model.trim.lazy="workExperience.endDate",
                   format="YYYY/MM"
                   @keyup.enter="editWorkExperience")
-            q-field(label="Summary", :count="500", orientation="vertical")
+            q-field(:label="$t('users.profile.workExperience.summary')", :count="500", orientation="vertical")
               q-input(v-model="workExperience.description", type="textarea",
                 maxlength="500", :max-height="150", rows="7")
             q-card-separator
             q-card-actions(align="end")
               q-field
-                q-btn(v-if="mode === 'create'", color="primary", label="Create", @click="newWorkExperience")
-                q-btn(v-if="mode === 'update'", color="primary", label="Update", @click="editWorkExperience")
+                q-btn(v-if="mode === 'create'", color="primary", :label="$t('users.profile.workExperience.create')", @click="newWorkExperience")
+                q-btn(v-if="mode === 'update'", color="primary", :label="$t('users.profile.workExperience.update')", @click="editWorkExperience")
 
         q-card-separator(v-if="workExperiences.length > 0")
         q-card-main(v-for="workExperience in workExperiences", :key="workExperience._id")
@@ -337,9 +337,9 @@ div.profile-form
                 q-popover
                   q-list.no-border(link)
                     q-item(v-close-overlay, @click.native="loadWorkExperience(workExperience._id)")
-                      q-item-main(label="Edit")
+                      q-item-main(:label="$t('users.profile.workExperience.edit')")
                     q-item(v-close-overlay, @click.native="removeWorkExperience(workExperience._id)")
-                      q-item-main(label="Delete")
+                      q-item-main(:label="$t('users.profile.workExperience.delete')")
             q-card-main
               p.work-experience-description {{ workExperience.description }}
 
