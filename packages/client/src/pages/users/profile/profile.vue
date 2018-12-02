@@ -296,6 +296,7 @@ div.profile-form
       h4.q-mb-sm {{ $t('users.profile.workExperience.label') }}
       q-card(square, color="white")
         q-card-title
+          span.job-title(v-if="workExperiences.length == 0") {{ $t('users.profile.workExperience.tellUs') }}
           q-icon(slot="right")
             q-btn(round, dense, color="primary", size="md", icon="add_circle_outline", @click="openWorkExperienceForm")
 
@@ -327,8 +328,11 @@ div.profile-form
                 q-btn(v-if="mode === 'create'", color="primary", :label="$t('users.profile.workExperience.create')", @click="newWorkExperience")
                 q-btn(v-if="mode === 'update'", color="primary", :label="$t('users.profile.workExperience.update')", @click="editWorkExperience")
 
-        q-card-separator(v-if="workExperiences.length > 0")
-        q-card-main(v-for="workExperience in workExperiences", :key="workExperience._id")
+        q-card-separator
+        q-card-main(
+          v-if="workExperiences.length > 0",
+          v-for="workExperience in workExperiences",
+          :key="workExperience._id")
           q-card
             q-card-title
               span.job-title {{ workExperience.jobTitle }}

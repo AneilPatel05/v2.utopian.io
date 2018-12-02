@@ -196,6 +196,7 @@
       },
       "workExperience": {
         "label": "Work Experiences",
+        "tellUs": "Tell us about your different jobs and projects", 
         "jobTitle": "Job Title",
         "company": "Company",
         "current": "Current",
